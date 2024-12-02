@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	private static final int SCREEN_WIDTH = 1300;
-	private static final int SCREEN_HEIGHT = 750;
+	private static final int SCREEN_WIDTH = 1200;
+	private static final int SCREEN_HEIGHT = 650;
 	private static final String TITLE = "Sky Battle";
 	private Controller myController;
 
