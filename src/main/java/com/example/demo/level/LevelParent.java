@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.level.levelview.LevelView;
-import com.example.demo.view.UserPlane;
+import com.example.demo.model.UserPlane;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.FighterPlane;
 import javafx.animation.*;
