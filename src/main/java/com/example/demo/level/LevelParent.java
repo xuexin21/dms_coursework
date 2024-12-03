@@ -91,6 +91,7 @@ public abstract class LevelParent extends Observable {
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
+		handleFireProjectileCollisions();
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
 		updateKillCount();
@@ -183,6 +184,10 @@ public abstract class LevelParent extends Observable {
 
 	private void handleEnemyProjectileCollisions() {
 		handleCollisions(enemyProjectiles, friendlyUnits);
+	}
+
+	private void handleFireProjectileCollisions() {
+		handleCollisions(enemyProjectiles, userProjectiles);
 	}
 
 	private void handleCollisions(List<ActiveActorDestructible> actors1,
