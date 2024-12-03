@@ -125,6 +125,13 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT || kc == KeyCode.A || kc == KeyCode.D) user.stopHorizontally();
 			}
 		});
+		background.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				if (e.getButton() == MouseButton.PRIMARY) {
+					fireProjectile();
+				}
+			}
+		});
 		root.getChildren().add(background);
 	}
 
