@@ -3,6 +3,7 @@ package com.example.demo.model;
 import com.example.demo.projectile.BossProjectile;
 
 import java.util.*;
+import javafx.scene.control.ProgressBar;
 
 public class Boss extends FighterPlane {
 
@@ -26,6 +27,7 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
+	private ProgressBar healthBar;
 
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -35,6 +37,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
+		initializeHealthBar();
 	}
 
 	@Override
@@ -51,6 +54,7 @@ public class Boss extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 		updateShield();
+		updateHealthBarPosition();
 	}
 
 	@Override
@@ -62,6 +66,7 @@ public class Boss extends FighterPlane {
 	public void takeDamage() {
 		if (!isShielded) {
 			super.takeDamage();
+			updateHealthBar();
 		}
 	}
 
@@ -119,4 +124,26 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
+	private void initializeHealthBar() {
+		healthBar = new ProgressBar();
+		healthBar.setPrefWidth(380); // Set the preferred width of the health bar
+		healthBar.setPrefHeight(15); // Set preferred height
+		healthBar.setProgress(1.0); // Start full health
+		healthBar.setStyle("-fx-accent: red; -fx-control-inner-background: transparent;");
+	}
+
+	public ProgressBar getHealthBar() {
+		return healthBar;
+	}
+
+	private void updateHealthBarPosition() {
+		// Position the health bar below the boss
+		healthBar.setLayoutX(getLayoutX() + getTranslateX() + 3); // Center it below the boss
+		healthBar.setLayoutY(getLayoutY() + getTranslateY() + 85); // Adjust the Y position
+	}
+
+	private void updateHealthBar() {
+		double healthPercentage = (double) getHealth() / 100; // Assuming 100 is the max health
+		healthBar.setProgress(healthPercentage);
+	}
 }
