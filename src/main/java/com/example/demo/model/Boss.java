@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.projectile.BossProjectile;
+import com.example.demo.view.BossHealthDisplay;
 
 import java.util.*;
 import javafx.scene.control.ProgressBar;
@@ -27,7 +28,7 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private ProgressBar healthBar;
+	private BossHealthDisplay healthDisplay;
 
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -37,7 +38,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
-		initializeHealthBar();
+		initializeHealthDisplay();
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class Boss extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 		updateShield();
-		updateHealthBarPosition();
+		updateHealthDisplayPosition();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class Boss extends FighterPlane {
 	public void takeDamage() {
 		if (!isShielded) {
 			super.takeDamage();
-			updateHealthBar();
+			healthDisplay.updateBossHealth(getHealth()); // Update health display
 		}
 	}
 
@@ -124,26 +125,18 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
-	private void initializeHealthBar() {
-		healthBar = new ProgressBar();
-		healthBar.setPrefWidth(380); // Set the preferred width of the health bar
-		healthBar.setPrefHeight(15); // Set preferred height
-		healthBar.setProgress(1.0); // Start full health
-		healthBar.setStyle("-fx-accent: red; -fx-control-inner-background: transparent;");
+	private void initializeHealthDisplay() {
+		healthDisplay = new BossHealthDisplay(HEALTH); // Create health display
+		// Set the position of the health display if needed
+		healthDisplay.setLayout(INITIAL_X_POSITION, INITIAL_Y_POSITION + IMAGE_HEIGHT + 10);
 	}
 
-	public ProgressBar getHealthBar() {
-		return healthBar;
+	public BossHealthDisplay getHealthDisplay() {
+		return healthDisplay;
 	}
 
-	private void updateHealthBarPosition() {
-		// Position the health bar below the boss
-		healthBar.setLayoutX(getLayoutX() + getTranslateX() + 3); // Center it below the boss
-		healthBar.setLayoutY(getLayoutY() + getTranslateY() + 85); // Adjust the Y position
-	}
-
-	private void updateHealthBar() {
-		double healthPercentage = (double) getHealth() / 100; // Assuming 100 is the max health
-		healthBar.setProgress(healthPercentage);
+	private void updateHealthDisplayPosition() {
+		healthDisplay.setLayoutX(getLayoutX() + getTranslateX() + 3); // Center it below the boss
+		healthDisplay.setLayoutY(getLayoutY() + getTranslateY() + 85); // Adjust the Y position
 	}
 }
