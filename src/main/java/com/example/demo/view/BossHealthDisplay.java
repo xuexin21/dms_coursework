@@ -5,7 +5,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 
 public class BossHealthDisplay extends StackPane {
-    private int bossInitialHealth;
+    private final int bossInitialHealth;
     private final ProgressBar healthBar;
     private final Label healthText;
     private static final int BAR_WIDTH = 370;
@@ -33,18 +33,7 @@ public class BossHealthDisplay extends StackPane {
         this.setLayoutY(y);
     }
 
-    public void resetHealth(int bossHealth) {
-        this.bossInitialHealth = bossHealth;
-        this.healthBar.setProgress(1.0);
-        this.healthText.setText(bossHealth + "/" + bossHealth);
-        this.healthBar.setStyle("-fx-accent: darkred; -fx-control-inner-background: gray;");
-    }
-
-    public void hide() {
+    public void hideBossHealth() {
         this.setVisible(false);
-    }
-
-    public int getCurrentHealth() {
-        return Integer.parseInt(this.healthText.getText().split("/")[0]);
     }
 }
