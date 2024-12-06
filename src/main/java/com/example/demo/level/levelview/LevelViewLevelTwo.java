@@ -33,7 +33,7 @@ public class LevelViewLevelTwo extends LevelView {
 
 	public void updateShieldPosition(Boss boss){
 		double bossPositionX =  boss.getLayoutX() + boss.getTranslateX() - 10;
-		double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + 30;
+		double bossPositionY = boss.getLayoutY() + boss.getTranslateY() + 20;
 		shieldImage.setLayout(bossPositionX, bossPositionY);
 	}
 

@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 public class ShieldImage extends ImageView {
 	
 	private static final String IMAGE_NAME = "/com/example/demo/images/shield.png";
-	public static final int SHIELD_SIZE = 50;
+	public static final int SHIELD_SIZE = 60;
 	
 	public ShieldImage() {
 		this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
