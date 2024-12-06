@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
 import com.example.demo.projectile.BossProjectile;
-import com.example.demo.view.BossHealthDisplay;
 
 import java.util.*;
-import javafx.scene.control.ProgressBar;
 
 public class Boss extends FighterPlane {
 
@@ -16,29 +14,26 @@ public class Boss extends FighterPlane {
 	private static final double BOSS_SHIELD_PROBABILITY = .002;
 	private static final int IMAGE_HEIGHT = 80;
 	private static final int VERTICAL_VELOCITY = 8;
-	private static final int HEALTH = 100;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
 	private static final int Y_POSITION_UPPER_BOUND = -5;
 	private static final int Y_POSITION_LOWER_BOUND = 510;
-	private static final int MAX_FRAMES_WITH_SHIELD = 500;
+	private static final int MAX_FRAMES_WITH_SHIELD = 200;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private BossHealthDisplay healthDisplay;
 
-	public Boss() {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+	public Boss(int health) {
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, health);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
-		initializeHealthDisplay();
 	}
 
 	@Override
@@ -55,7 +50,6 @@ public class Boss extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 		updateShield();
-		updateHealthDisplayPosition();
 	}
 
 	@Override
@@ -67,7 +61,6 @@ public class Boss extends FighterPlane {
 	public void takeDamage() {
 		if (!isShielded) {
 			super.takeDamage();
-			healthDisplay.updateBossHealth(getHealth()); // Update health display
 		}
 	}
 
@@ -125,18 +118,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 	}
 
-	private void initializeHealthDisplay() {
-		healthDisplay = new BossHealthDisplay(HEALTH); // Create health display
-		// Set the position of the health display if needed
-		healthDisplay.setLayout(INITIAL_X_POSITION, INITIAL_Y_POSITION + IMAGE_HEIGHT + 10);
-	}
-
-	public BossHealthDisplay getHealthDisplay() {
-		return healthDisplay;
-	}
-
-	private void updateHealthDisplayPosition() {
-		healthDisplay.setLayoutX(getLayoutX() + getTranslateX() + 3); // Center it below the boss
-		healthDisplay.setLayoutY(getLayoutY() + getTranslateY() + 85); // Adjust the Y position
+	public boolean isShielded() {
+		return isShielded;
 	}
 }

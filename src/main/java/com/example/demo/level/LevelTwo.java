@@ -1,19 +1,21 @@
 package com.example.demo.level;
 
+import com.example.demo.model.Boss;
 import com.example.demo.level.levelview.LevelView;
 import com.example.demo.level.levelview.LevelViewLevelTwo;
-import com.example.demo.model.Boss;
+import javafx.scene.Scene;
 
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
+	private static final int bossHealth = 100;
 	private LevelViewLevelTwo levelView;
 
 	public LevelTwo(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		boss = new Boss();
+		boss = new Boss(bossHealth);
 	}
 
 	@Override
@@ -25,9 +27,11 @@ public class LevelTwo extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
+			levelView.hideBossHealth();
 		}
 		else if (boss.isDestroyed()) {
 			winGame();
+			levelView.hideBossHealth();
 		}
 	}
 
@@ -35,14 +39,37 @@ public class LevelTwo extends LevelParent {
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
 			addEnemyUnit(boss);
-			getRoot().getChildren().add(boss.getHealthDisplay()); // Add the health bar to the scene
 		}
 	}
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, bossHealth);
 		return levelView;
 	}
 
+	@Override
+	public Scene initializeScene() {
+		Scene scene = super.initializeScene();
+		levelView.displayShield();
+		levelView.showBossHealth();
+		return scene;
+	}
+
+	@Override
+	protected void updateLevelView() {
+		super.updateLevelView();
+		// update shield position
+		levelView.updateShieldPosition(boss);
+
+		if (boss.isShielded()) {
+			levelView.showShield();
+		} else {
+			levelView.hideShield();
+		}
+
+		// update boss health
+		levelView.updateBossHealth(boss.getHealth());
+		levelView.updateHealthDisplayPosition(boss);
+	}
 }
