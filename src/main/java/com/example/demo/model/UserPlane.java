@@ -98,4 +98,19 @@ public class UserPlane extends FighterPlane {
 		numberOfKills++;
 	}
 
+	public void setHorizontalVelocityMultiplier(int horizontalVelocityMultiplier) {
+		this.horizontalVelocityMultiplier = horizontalVelocityMultiplier;
+	}
+
+	public int getHorizontalVelocityMultiplier() {
+		return horizontalVelocityMultiplier;
+	}
+
+	public void setVerticalVelocityMultiplier(int verticalVelocityMultiplier) {
+		this.verticalVelocityMultiplier = verticalVelocityMultiplier;
+	}
+
+	public int getVerticalVelocityMultiplier() {
+		return verticalVelocityMultiplier;
+	}
 }

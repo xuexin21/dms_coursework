@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
+	private static final String NEXT_LEVEL = "com.example.demo.level.LevelThree";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
 	private static final int bossHealth = 100;
@@ -30,8 +31,8 @@ public class LevelTwo extends LevelParent {
 			levelView.hideBossHealth();
 		}
 		else if (boss.isDestroyed()) {
-			winGame();
 			levelView.hideBossHealth();
+			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 
