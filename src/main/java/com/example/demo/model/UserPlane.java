@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.projectile.UserProjectile;
+import com.example.demo.view.HeartDisplay;
 
 public class UserPlane extends FighterPlane {
 
@@ -12,8 +13,8 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 40;
-	private static final int VERTICAL_VELOCITY = 10;
-	private static final int HORIZONTAL_VELOCITY = 10;
+	private int VERTICAL_VELOCITY = 10;
+	private int HORIZONTAL_VELOCITY = 10;
 	private static final int PROJECTILE_X_POSITION = 140;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 21;
 	private int verticalVelocityMultiplier;
@@ -98,19 +99,19 @@ public class UserPlane extends FighterPlane {
 		numberOfKills++;
 	}
 
-	public void setHorizontalVelocityMultiplier(int horizontalVelocityMultiplier) {
-		this.horizontalVelocityMultiplier = horizontalVelocityMultiplier;
+	public void giveExtraLife() {
+		if (this.health < 5) {
+			health++;
+		}
+		System.out.println(health);
 	}
 
-	public int getHorizontalVelocityMultiplier() {
-		return horizontalVelocityMultiplier;
+	public void increaseSpeed() {
+		this.VERTICAL_VELOCITY += 2;
+		this.HORIZONTAL_VELOCITY += 2;
 	}
 
-	public void setVerticalVelocityMultiplier(int verticalVelocityMultiplier) {
-		this.verticalVelocityMultiplier = verticalVelocityMultiplier;
-	}
-
-	public int getVerticalVelocityMultiplier() {
-		return verticalVelocityMultiplier;
+	public void increaseProjectileSpeed() {
+		UserProjectile.increaseProjectileVelocity();
 	}
 }

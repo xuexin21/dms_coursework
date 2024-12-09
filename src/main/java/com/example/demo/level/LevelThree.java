@@ -3,6 +3,7 @@ package com.example.demo.level;
 import com.example.demo.level.levelview.LevelView;
 import com.example.demo.level.levelview.LevelViewLevelThree;
 import com.example.demo.model.ActiveActorDestructible;
+import com.example.demo.model.Butterfly;
 import com.example.demo.model.SecondEnemyPlane;
 import javafx.scene.Scene;
 
@@ -11,8 +12,10 @@ public class LevelThree extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.png";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelFour";
 	private static final int TOTAL_ENEMIES = 5;
+	private static final int TOTAL_BUTTERFLIES = 2;
 	private static final int KILLS_TO_ADVANCE = 30;
 	private static final double ENEMY_SPAWN_PROBABILITY = .05;
+	private static final double BUTTERFLY_SPAWN_PROBABILITY = .02;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private LevelViewLevelThree levelView;
 
@@ -48,6 +51,17 @@ public class LevelThree extends LevelParent {
 	}
 
 	@Override
+	protected void spawnButterflyUnits() {
+		for (int i = 0; i < TOTAL_BUTTERFLIES; i++) {
+			if (Math.random() < BUTTERFLY_SPAWN_PROBABILITY) {
+				double newButterflyInitialYPosition = Math.random() * getButterflyMaximumYPosition();
+				ActiveActorDestructible newButterfly = new Butterfly(getScreenWidth(), newButterflyInitialYPosition, 1); // Assuming health is 1
+				addButterflyUnit(newButterfly);
+			}
+		}
+	}
+
+	@Override
 	protected LevelView instantiateLevelView() {
 		this.levelView = new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
 		return levelView;
@@ -62,15 +76,12 @@ public class LevelThree extends LevelParent {
 		super.updateLevelView();
 		int currentKillCount = getUser ().getNumberOfKills();
 		levelView.updateKillCount(currentKillCount);
-		levelView.dropPowerUp(currentKillCount);
 	}
 
 	@Override
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
 		levelView.showKillCount();
-		levelView.displayPowerUp();
 		return scene;
 	}
-
 }

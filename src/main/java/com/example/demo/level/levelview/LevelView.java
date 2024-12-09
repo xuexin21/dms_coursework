@@ -46,4 +46,10 @@ public class LevelView {
 		}
 	}
 
+	public void addHearts(int heartsRemaining) {
+		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
+		for (int i = 0; i < heartsRemaining - currentNumberOfHearts; i++) {
+			heartDisplay.addHeart();
+		}
+	}
 }
