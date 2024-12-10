@@ -5,6 +5,7 @@ import com.example.demo.level.levelview.LevelViewLevelThree;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.Butterfly;
 import com.example.demo.model.SecondEnemyPlane;
+import com.example.demo.model.UserPlane;
 import javafx.scene.Scene;
 
 public class LevelThree extends LevelParent {
@@ -29,7 +30,8 @@ public class LevelThree extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
-			winGame();
+			getUser().reset();
+			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 

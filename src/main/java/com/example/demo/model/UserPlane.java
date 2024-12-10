@@ -102,7 +102,6 @@ public class UserPlane extends FighterPlane {
 		if (this.health < 5) {
 			health++;
 		}
-		System.out.println(health);
 	}
 
 	public void increaseSpeed() {
@@ -114,5 +113,11 @@ public class UserPlane extends FighterPlane {
 
 	public void increaseProjectileSpeed() {
 		UserProjectile.increaseProjectileVelocity();
+	}
+
+	public void reset() {
+		HORIZONTAL_VELOCITY = 10;
+		VERTICAL_VELOCITY = 10;
+		UserProjectile.resetProjectileVelocity();
 	}
 }
