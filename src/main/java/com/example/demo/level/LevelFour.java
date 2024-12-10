@@ -120,6 +120,5 @@ public class LevelFour extends LevelParent {
 		addEnemyUnit(secondBoss);
 		levelView.secondBossDisplayShield();
 		levelView.SecondBossShowBossHealth();
-		System.out.println("Second Boss Spawned!");
 	}
 }
