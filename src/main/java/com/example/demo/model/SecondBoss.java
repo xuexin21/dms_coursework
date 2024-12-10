@@ -2,8 +2,8 @@ package com.example.demo.model;
 
 public class SecondBoss extends Boss {
 
-    private static final int INITIAL_HEALTH = 150;
-    private static final double UPGRADE_FIRE_RATE = .06;
+    private static final int INITIAL_HEALTH = 100;
+    private static final double UPGRADE_FIRE_RATE = .08;
 
     public SecondBoss() {
         super(INITIAL_HEALTH);
