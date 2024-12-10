@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Butterfly extends FighterPlane {
     private static final String IMAGE_NAME = "butterfly.png";
-    private static final int IMAGE_HEIGHT = 80;
+    private static final int IMAGE_HEIGHT = 60;
     private static final int HORIZONTAL_VELOCITY = -6;
     private static final int INITIAL_HEALTH = 1;
     private int number;
@@ -40,15 +40,12 @@ public class Butterfly extends FighterPlane {
             switch (number) {
                 case 0:
                     user.giveExtraLife();
-                    System.out.println("extralife");
                     break;
                 case 1:
                     user.increaseSpeed();
-                    System.out.println("increaseSpeed");
                     break;
                 case 2:
                     user.increaseProjectileSpeed();
-                    System.out.println("increaseProjectileSpeed");
                     break;
             }
         }
