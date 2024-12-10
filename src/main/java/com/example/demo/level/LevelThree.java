@@ -2,10 +2,7 @@ package com.example.demo.level;
 
 import com.example.demo.level.levelview.LevelView;
 import com.example.demo.level.levelview.LevelViewLevelThree;
-import com.example.demo.model.ActiveActorDestructible;
-import com.example.demo.model.Butterfly;
-import com.example.demo.model.SecondEnemyPlane;
-import com.example.demo.model.UserPlane;
+import com.example.demo.model.*;
 import javafx.scene.Scene;
 
 public class LevelThree extends LevelParent {
@@ -14,9 +11,11 @@ public class LevelThree extends LevelParent {
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelFour";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int TOTAL_BUTTERFLIES = 2;
-	private static final int KILLS_TO_ADVANCE = 30;
-	private static final double ENEMY_SPAWN_PROBABILITY = .05;
-	private static final double BUTTERFLY_SPAWN_PROBABILITY = .02;
+	private	static final int TOTAL_OBSTACLES = 1;
+	private static final int KILLS_TO_ADVANCE = 50;
+	private static final double ENEMY_SPAWN_PROBABILITY = .04;
+	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
+	private static final double OBSTACLE_SPAWN_PROBABILITY = .007;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private LevelViewLevelThree levelView;
 
@@ -59,6 +58,17 @@ public class LevelThree extends LevelParent {
 				double newButterflyInitialYPosition = Math.random() * getButterflyMaximumYPosition();
 				ActiveActorDestructible newButterfly = new Butterfly(getScreenWidth(), newButterflyInitialYPosition, 1); // Assuming health is 1
 				addButterflyUnit(newButterfly);
+			}
+		}
+	}
+
+	@Override
+	protected void spawnObstacle() {
+		for (int i = 0; i < TOTAL_OBSTACLES; i++) {
+			if (Math.random() < OBSTACLE_SPAWN_PROBABILITY) {
+				double newObstacleInitialYPosition = Math.random() * getObstacleMaximumYPosition();
+				ActiveActorDestructible newObstacle = new Obstacle(getScreenWidth(), newObstacleInitialYPosition); // Assuming health is 1
+				addObstacleUnit(newObstacle);
 			}
 		}
 	}

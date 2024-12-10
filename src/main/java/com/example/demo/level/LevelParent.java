@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.level.levelview.LevelView;
+import com.example.demo.model.Obstacle;
 import com.example.demo.model.UserPlane;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.FighterPlane;
@@ -23,6 +24,7 @@ public abstract class LevelParent extends Observable {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
 	private final double butterflyMaximumYPosition;
+	private final double obstacleMaximumYPosition;
 
 	private final Group root;
 	private final Timeline timeline;
@@ -35,6 +37,7 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 	private final List<ActiveActorDestructible> butterflyUnits;
+	private final List<ActiveActorDestructible> obstacleUnits;
 	
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
@@ -49,12 +52,14 @@ public abstract class LevelParent extends Observable {
 		this.userProjectiles = new ArrayList<>();
 		this.enemyProjectiles = new ArrayList<>();
 		this.butterflyUnits = new ArrayList<>();
+		this.obstacleUnits = new ArrayList<>();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.butterflyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
+		this.obstacleMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
@@ -68,6 +73,8 @@ public abstract class LevelParent extends Observable {
 	protected abstract void spawnEnemyUnits();
 
 	protected void spawnButterflyUnits() {};
+
+	protected void spawnObstacle() {};
 
 	protected abstract LevelView instantiateLevelView();
 
@@ -92,6 +99,7 @@ public abstract class LevelParent extends Observable {
 	private void updateScene() {
 		spawnEnemyUnits();
 		spawnButterflyUnits();
+		spawnObstacle();
 		updateActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();
@@ -167,6 +175,7 @@ public abstract class LevelParent extends Observable {
 		userProjectiles.forEach(projectile -> projectile.updateActor());
 		enemyProjectiles.forEach(projectile -> projectile.updateActor());
 		butterflyUnits.forEach(butterfly -> butterfly.updateActor());
+		obstacleUnits.forEach(obstacle -> obstacle.updateActor());
 	}
 
 	private void removeAllDestroyedActors() {
@@ -272,12 +281,21 @@ public abstract class LevelParent extends Observable {
 		root.getChildren().add(butterfly);
 	}
 
+	protected void addObstacleUnit(ActiveActorDestructible obstacle)	{
+		obstacleUnits.add(obstacle);
+		root.getChildren().add(obstacle);
+	}
+
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}
 
 	protected double getButterflyMaximumYPosition() {
 		return butterflyMaximumYPosition;
+	}
+
+	protected double getObstacleMaximumYPosition () {
+		return obstacleMaximumYPosition;
 	}
 
 	protected double getScreenWidth() {
