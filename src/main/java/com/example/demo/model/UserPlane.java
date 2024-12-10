@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import com.example.demo.projectile.UserProjectile;
-import com.example.demo.view.HeartDisplay;
 
 public class UserPlane extends FighterPlane {
 
@@ -107,8 +106,10 @@ public class UserPlane extends FighterPlane {
 	}
 
 	public void increaseSpeed() {
-		this.VERTICAL_VELOCITY += 2;
-		this.HORIZONTAL_VELOCITY += 2;
+		if (this.VERTICAL_VELOCITY <= 20 && this.HORIZONTAL_VELOCITY <= 20) {
+			this.VERTICAL_VELOCITY += 2;
+			this.HORIZONTAL_VELOCITY += 2;
+		}
 	}
 
 	public void increaseProjectileSpeed() {

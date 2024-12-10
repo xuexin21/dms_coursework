@@ -21,6 +21,8 @@ public class UserProjectile extends Projectile {
 	}
 
 	public static void increaseProjectileVelocity() {
-		HORIZONTAL_VELOCITY += 5;
+		if (HORIZONTAL_VELOCITY < 30) {
+			HORIZONTAL_VELOCITY += 3;
+		}
 	}
 }
