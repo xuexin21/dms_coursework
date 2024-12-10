@@ -5,6 +5,7 @@ import com.example.demo.level.levelview.LevelViewLevelFour;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.Butterfly;
 import com.example.demo.model.Boss;
+import com.example.demo.model.SecondBoss;
 import com.example.demo.model.Obstacle;
 import javafx.scene.Scene;
 
@@ -13,16 +14,20 @@ public class LevelFour extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background4.png";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private static final int TOTAL_BUTTERFLIES = 2;
-	private	static final int TOTAL_OBSTACLES = 2;
-	private static final double OBSTACLE_SPAWN_PROBABILITY = .013;
-	private static final double BUTTERFLY_SPAWN_PROBABILITY = .015;
-	private final Boss boss;
+	private	static final int TOTAL_OBSTACLES = 1;
+	private static final double OBSTACLE_SPAWN_PROBABILITY = .007;
+	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
 	private static final int bossHealth = 100;
+	private final Boss firstboss;
+	private SecondBoss secondBoss;
+	private boolean secondBossSpawned;
 	private LevelViewLevelFour levelView;
 
 	public LevelFour(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		boss = new Boss(bossHealth);
+		firstboss = new Boss(bossHealth);
+		secondBoss = new SecondBoss();
+		secondBossSpawned = false;
 	}
 
 	@Override
@@ -34,10 +39,12 @@ public class LevelFour extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
-			levelView.hideBossHealth();
+			levelView.firstBossHideBossHealth();
+			levelView.secondBossHideBossHealth();
 		}
-		else if (boss.isDestroyed()) {
-			levelView.hideBossHealth();
+		else if (firstboss.isDestroyed() && (secondBossSpawned && secondBoss.isDestroyed())) {
+			levelView.firstBossHideBossHealth();
+			levelView.secondBossHideBossHealth();
 			winGame();
 		}
 	}
@@ -45,7 +52,11 @@ public class LevelFour extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
-			addEnemyUnit(boss);
+			addEnemyUnit(firstboss);
+		}
+		if (!secondBossSpawned && firstboss.getHealth() <= bossHealth / 2)  {
+			spawnSecondBoss();
+			secondBossSpawned = true;
 		}
 	}
 
@@ -80,25 +91,35 @@ public class LevelFour extends LevelParent {
 	@Override
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
-		levelView.displayShield();
-		levelView.showBossHealth();
+		levelView.firstBossDisplayShield();
+		levelView.firstBossShowBossHealth();
 		return scene;
 	}
 
 	@Override
 	protected void updateLevelView() {
 		super.updateLevelView();
-		// update shield position
-		levelView.updateShieldPosition(boss);
+		levelView.firstBossUpdateShieldPosition(firstboss);
+		levelView.firstBossUpdateBossHealth(firstboss.getHealth());
+		levelView.firstBossUpdateHealthDisplayPosition(firstboss);
 
-		if (boss.isShielded()) {
-			levelView.showShield();
-		} else {
-			levelView.hideShield();
-		}
+		if (firstboss.isShielded()) levelView.firstBossShowShield();
+		else levelView.firstBossHideShield();
 
-		// update boss health
-		levelView.updateBossHealth(boss.getHealth());
-		levelView.updateHealthDisplayPosition(boss);
+		if (firstboss.isDestroyed()) levelView.firstBossHideBossHealth();
+
+		levelView.secondBossUpdateShieldPosition(secondBoss);
+		levelView.secondBossUpdateBossHealth(secondBoss.getHealth());
+		levelView.secondBossUpdateHealthDisplayPosition(secondBoss);
+
+		if (secondBoss.isShielded()) levelView.secondBossShowShield();
+		else levelView.secondBossHideShield();
+	}
+
+	private void spawnSecondBoss() {
+		addEnemyUnit(secondBoss);// Add to the game logic
+		levelView.secondBossDisplayShield();
+		levelView.SecondBossShowBossHealth();
+		System.out.println("Second Boss Spawned!");
 	}
 }
