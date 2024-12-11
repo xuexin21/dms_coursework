@@ -292,12 +292,14 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		music.stopBackgroundMusic();
 		levelView.showWinImage();
+		pauseButton.hidePauseButton();
 	}
 
 	protected void loseGame() {
 		timeline.stop();
 		music.stopBackgroundMusic();
 		levelView.showGameOverImage();
+		pauseButton.hidePauseButton();
 	}
 
 	public static UserPlane getUser() {

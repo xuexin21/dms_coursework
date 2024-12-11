@@ -24,4 +24,8 @@ public class PauseButton extends ImageView {
             onPause.run();
         });
     }
+
+    public void hidePauseButton () {
+        this.setVisible(false);
+    }
 }
