@@ -17,6 +17,12 @@ public class Music {
     public void playMainMenuMusic() {
         if (isMuted) return;
         mainMenuMusic.play();
+        mainMenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        mainMenuMusic.setVolume(20);
+    }
+
+    public void stopMainMenuMusic() {
+        mainMenuMusic.stop();
     }
 
     public boolean isMuted() {

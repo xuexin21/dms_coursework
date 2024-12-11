@@ -7,18 +7,19 @@ import com.example.demo.audio.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class MainMenu {
     private final Stage stage;
-    private final String BACKGROUND_IMAGE = "/com/example/demo/images/main.jpg";
+    private final String BACKGROUND_VIDEO = "/com/example/demo/images/main.mp4"; // Path to video file
     private final String MAIN_MENU_STYLE = "/com/example/demo/styles/main_menu.css";
     private final Music music = new Music();
     private final Sound sound = new Sound();
+    private MediaPlayer backgroundPlayer;
 
     public MainMenu(Stage stage) {
         this.stage = stage;
@@ -62,19 +63,25 @@ public class MainMenu {
         layout.getStyleClass().add("layout"); // Apply layout style
         layout.getChildren().addAll(titleLabel, playButton, settingsButton, exitButton);
 
-        Image backgroundImage = new Image(getClass().getResource(BACKGROUND_IMAGE).toExternalForm());
-        BackgroundImage bgImage = new BackgroundImage(
-                backgroundImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
-        );
-        layout.setBackground(new Background(bgImage));
+        // Set up the background video
+        Media video = new Media(getClass().getResource(BACKGROUND_VIDEO).toExternalForm());
+        backgroundPlayer = new MediaPlayer(video);
+        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the video
+        backgroundPlayer.setVolume(0); // Mute the video
+        backgroundPlayer.play();
 
+        // Create a MediaView to display the video
+        MediaView mediaView = new MediaView(backgroundPlayer);
+        mediaView.setFitWidth(stage.getWidth()); // Set the width to match the stage
+        mediaView.setFitHeight(stage.getHeight()); // Set the height to match the stage
+
+        // Use a StackPane to stack the video behind the UI elements (layout)
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(mediaView); // Add video at the bottom
+        stackPane.getChildren().add(layout); // Add UI elements (buttons, etc.) on top
 
         // Create the scene and set it to the stage
-        Scene scene = new Scene(layout, stage.getWidth(), stage.getHeight());
+        Scene scene = new Scene(stackPane, stage.getWidth(), stage.getHeight());
 
         // Add the stylesheet to the scene
         scene.getStylesheets().add(getClass().getResource(MAIN_MENU_STYLE).toExternalForm());
@@ -93,5 +100,6 @@ public class MainMenu {
     private void startLevelOne() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Controller controller = new Controller(stage);
         controller.launchGame();
+        music.stopMainMenuMusic();
     }
 }

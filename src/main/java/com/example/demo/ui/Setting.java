@@ -9,7 +9,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.media.MediaPlayer;
 
 public class Setting {
 
@@ -82,6 +81,7 @@ public class Setting {
             sound.unmute();
             soundToggle.setText("Sound: ON");
         } else {
+            sound.playButtonSound();
             sound.mute();
             soundToggle.setText("Sound: OFF");
         }
@@ -92,6 +92,7 @@ public class Setting {
             music.unmute();
             musicToggle.setText("Music: ON");
         } else {
+            sound.playButtonSound();
             music.mute();
             musicToggle.setText("Music: OFF");
         }

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.projectile.UserProjectile;
+import com.example.demo.audio.Sound;
 
 public class UserPlane extends FighterPlane {
 
@@ -19,11 +20,13 @@ public class UserPlane extends FighterPlane {
 	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
 	private int numberOfKills;
+	private Sound sound;
 
 	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
+		this.sound = new Sound();
 	}
 	
 	@Override
@@ -53,6 +56,7 @@ public class UserPlane extends FighterPlane {
 	
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+		sound.playUserProjectileSound();
 		double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION);
 		double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
 		return new UserProjectile(projectileXPosition, projectileYPosition);

@@ -15,7 +15,7 @@ public class LevelThree extends LevelParent {
 	private static final int KILLS_TO_ADVANCE = 50;
 	private static final double ENEMY_SPAWN_PROBABILITY = .04;
 	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
-	private static final double OBSTACLE_SPAWN_PROBABILITY = .007;
+	private static final double OBSTACLE_SPAWN_PROBABILITY = .01;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private LevelViewLevelThree levelView;
 

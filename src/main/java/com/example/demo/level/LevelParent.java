@@ -1,23 +1,30 @@
 package com.example.demo.level;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.level.levelview.LevelView;
-import com.example.demo.model.Obstacle;
+import com.example.demo.audio.*;
 import com.example.demo.model.UserPlane;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.FighterPlane;
+import com.example.demo.controller.Main;
+import com.example.demo.ui.PauseButton;
+import com.example.demo.ui.PauseMenu;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
 
+	private static final int SCREEN_WIDTH = 1300;
+	private static final int SCREEN_HEIGHT = 750;
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
@@ -38,6 +45,13 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 	private final List<ActiveActorDestructible> butterflyUnits;
 	private final List<ActiveActorDestructible> obstacleUnits;
+
+	private final Music music;
+	private final Sound sound;
+	private PauseButton pauseButton;
+	private PauseMenu pauseMenu;
+	private final Main main = new Main();
+	private boolean isPaused = false;
 	
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
@@ -62,6 +76,9 @@ public abstract class LevelParent extends Observable {
 		this.obstacleMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
+		this.music = new Music();
+		this.sound = new Sound();
+		this.pauseButton = new PauseButton(this::pauseGame, sound);
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
@@ -82,6 +99,7 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		root.getChildren().add(pauseButton);
 		return scene;
 	}
 
@@ -310,8 +328,26 @@ public abstract class LevelParent extends Observable {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
 
-	private void updateHealth(){
-		int health = user.getHealth();
+	private void pauseGame() {
+		timeline.pause();
+		pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music,sound);
+		pauseMenu.showPauseMenu();
+		isPaused = true;
+	}
 
+	private void resumeGame() {
+		timeline.play();
+		isPaused = false;
+	}
+
+	private void returnToMenu() {
+		try {
+			timeline.stop();
+			main.start((Stage) root.getScene().getWindow());
+		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
+				 | IllegalAccessException | InvocationTargetException e) {
+			System.err.println("Error returning to the main menu: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }
