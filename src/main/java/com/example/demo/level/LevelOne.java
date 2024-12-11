@@ -1,5 +1,6 @@
 package com.example.demo.level;
 
+import com.example.demo.audio.*;
 import com.example.demo.level.levelview.LevelView;
 import com.example.demo.level.levelview.LevelViewLevelOne;
 import com.example.demo.model.ActiveActorDestructible;
@@ -16,8 +17,8 @@ public class LevelOne extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private LevelViewLevelOne levelView;
 
-	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public LevelOne(double screenHeight, double screenWidth, Music music, Sound sound) {
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, sound);
 	}
 
 	@Override

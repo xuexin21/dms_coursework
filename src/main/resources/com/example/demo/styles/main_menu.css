@@ -18,6 +18,24 @@
     -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 1, 1); /* Shadow effect */
 }
 
+.toggle {
+    -fx-background-color: #A7D8DD;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;            /* Increase font size */
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px;         /* Add padding around the text */
+    -fx-border-radius: 10px;       /* Rounded corners */
+    -fx-background-radius: 10px;    /* Rounded background */
+    -fx-font-family: "Arial", sans-serif;
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 1, 1); /* Shadow effect */
+}
+
+.toggle:hover {
+    -fx-font-size: 14px;
+    -fx-background-color: #68A0AF; /* Darker green on hover */
+    -fx-effect: dropshadow(gaussian, #000000, 15, 0.5, 1, 1); /* Stronger shadow on hover */
+}
+
 .button:hover {
     -fx-font-size: 14px;
     -fx-background-color: #68A0AF; /* Darker green on hover */

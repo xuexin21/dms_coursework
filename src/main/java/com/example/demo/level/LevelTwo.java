@@ -1,5 +1,6 @@
 package com.example.demo.level;
 
+import com.example.demo.audio.*;
 import com.example.demo.model.Boss;
 import com.example.demo.level.levelview.LevelView;
 import com.example.demo.level.levelview.LevelViewLevelTwo;
@@ -14,8 +15,8 @@ public class LevelTwo extends LevelParent {
 	private static final int bossHealth = 100;
 	private LevelViewLevelTwo levelView;
 
-	public LevelTwo(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public LevelTwo(double screenHeight, double screenWidth, Music music, Sound sound) {
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, sound);
 		boss = new Boss(bossHealth);
 	}
 

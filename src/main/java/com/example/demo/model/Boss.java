@@ -32,7 +32,6 @@ public class Boss extends FighterPlane {
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
-		isShielded = false;
 		initializeMovePattern();
 	}
 

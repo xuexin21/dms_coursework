@@ -7,6 +7,7 @@ import com.example.demo.audio.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
@@ -43,13 +44,15 @@ public class MainMenu {
             }
         });
 
-        // Create the Options button
-        Button settingsButton = new Button("Settings");
-        settingsButton.getStyleClass().add("button"); // Apply button style
-        settingsButton.setOnAction(e -> {
-            sound.playButtonSound();
-            openSettings();
-        });
+        // Sound Toggle
+        ToggleButton soundToggle = new ToggleButton(sound.isMuted() ? "Sound: OFF" : "Sound: ON");
+        soundToggle.setOnAction(e -> toggleMuteSound(soundToggle));
+        soundToggle.getStyleClass().add("toggle");
+
+        // Music Toggle
+        ToggleButton musicToggle = new ToggleButton(music.isMuted() ? "Music: OFF" : "Music: ON");
+        musicToggle.setOnAction(e -> toggleMuteMusic(musicToggle));
+        musicToggle.getStyleClass().add("toggle");
 
         Button exitButton = new Button("Exit");
         exitButton.getStyleClass().add("button");
@@ -61,7 +64,7 @@ public class MainMenu {
         // Set up the layout (VBox)
         VBox layout = new VBox(20);
         layout.getStyleClass().add("layout"); // Apply layout style
-        layout.getChildren().addAll(titleLabel, playButton, settingsButton, exitButton);
+        layout.getChildren().addAll(titleLabel, playButton, soundToggle, musicToggle, exitButton);
 
         // Set up the background video
         Media video = new Media(getClass().getResource(BACKGROUND_VIDEO).toExternalForm());
@@ -91,15 +94,31 @@ public class MainMenu {
         music.playMainMenuMusic();
     }
 
-    private void openSettings() {
-        // Pass the current scene and MediaPlayer to the Setting pop-up
-        Setting setting = new Setting(stage.getScene(), music, sound);
-        setting.showPopup(); // Call the pop-up method from the Setting class
-    }
-
     private void startLevelOne() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Controller controller = new Controller(stage);
+        Controller controller = new Controller(stage, music, sound);
         controller.launchGame();
         music.stopMainMenuMusic();
+    }
+
+    private void toggleMuteSound(ToggleButton soundToggle){
+        if(sound.isMuted()){
+            sound.unmute();
+            soundToggle.setText("Sound: ON");
+        } else {
+            sound.playButtonSound();
+            sound.mute();
+            soundToggle.setText("Sound: OFF");
+        }
+    }
+
+    private void toggleMuteMusic(ToggleButton musicToggle){
+        if(music.isMuted()){
+            music.unmute();
+            musicToggle.setText("Music: ON");
+        } else {
+            sound.playButtonSound();
+            music.mute();
+            musicToggle.setText("Music: OFF");
+        }
     }
 }

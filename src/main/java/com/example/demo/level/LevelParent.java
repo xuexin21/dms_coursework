@@ -23,8 +23,6 @@ import javafx.util.Duration;
 
 public abstract class LevelParent extends Observable {
 
-	private static final int SCREEN_WIDTH = 1300;
-	private static final int SCREEN_HEIGHT = 750;
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
@@ -56,7 +54,7 @@ public abstract class LevelParent extends Observable {
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Music music, Sound sound) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -76,9 +74,10 @@ public abstract class LevelParent extends Observable {
 		this.obstacleMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
-		this.music = new Music();
-		this.sound = new Sound();
+		this.music = music;
+		this.sound = sound;
 		this.pauseButton = new PauseButton(this::pauseGame, sound);
+		pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music,sound);
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
@@ -99,13 +98,14 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
-		root.getChildren().add(pauseButton);
+		root.getChildren().addAll(pauseButton, pauseMenu);
 		return scene;
 	}
 
 	public void startGame() {
 		background.requestFocus();
 		timeline.play();
+		music.playBackgroundMusic();
 	}
 
 	public void goToNextLevel(String levelName) {
@@ -126,6 +126,7 @@ public abstract class LevelParent extends Observable {
 		handleEnemyProjectileCollisions();
 		handleFireProjectileCollisions();
 		handlePlaneCollisions();
+		handleSoundCollisions();
 		handleButterfliesCollisions();
 		removeAllDestroyedActors();
 		updateKillCount();
@@ -174,6 +175,7 @@ public abstract class LevelParent extends Observable {
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
+		sound.playUserProjectileSound();
 	}
 
 	private void generateEnemyFire() {
@@ -184,6 +186,7 @@ public abstract class LevelParent extends Observable {
 		if (projectile != null) {
 			root.getChildren().add(projectile);
 			enemyProjectiles.add(projectile);
+			sound.playEnemyProjectileSound();
 		}
 	}
 
@@ -231,6 +234,24 @@ public abstract class LevelParent extends Observable {
 		handleCollisions(userProjectiles, butterflyUnits);
 	}
 
+	private void handleSoundCollisions() {
+		for (ActiveActorDestructible actor : enemyUnits) {
+			if (actor.isDestroyed()) sound.playExplosionSound();
+		}
+
+		for (ActiveActorDestructible actor : friendlyUnits) {
+			if (actor.isDestroyed()) sound.playExplosionSound();
+		}
+
+		for (ActiveActorDestructible actor : butterflyUnits) {
+			for (ActiveActorDestructible otherActor : userProjectiles) {
+				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
+					sound.playPowerUpSound();
+				}
+			}
+		}
+	}
+
 	private void handleCollisions(List<ActiveActorDestructible> actors1,
 			List<ActiveActorDestructible> actors2) {
 		for (ActiveActorDestructible actor : actors2) {
@@ -269,11 +290,13 @@ public abstract class LevelParent extends Observable {
 
 	protected void winGame() {
 		timeline.stop();
+		music.stopBackgroundMusic();
 		levelView.showWinImage();
 	}
 
 	protected void loseGame() {
 		timeline.stop();
+		music.stopBackgroundMusic();
 		levelView.showGameOverImage();
 	}
 
@@ -330,20 +353,25 @@ public abstract class LevelParent extends Observable {
 
 	private void pauseGame() {
 		timeline.pause();
-		pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music,sound);
+		music.pauseBackgroundMusic();
 		pauseMenu.showPauseMenu();
+		pauseMenu.toFront();
+		pauseMenu.setVisible(true);
 		isPaused = true;
 	}
 
 	private void resumeGame() {
 		timeline.play();
+		music.playBackgroundMusic();
 		isPaused = false;
 	}
 
 	private void returnToMenu() {
 		try {
 			timeline.stop();
-			main.start((Stage) root.getScene().getWindow());
+			Stage stage = (Stage) root.getScene().getWindow();
+			stage.sizeToScene();
+			main.start(stage);
 		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
 				 | IllegalAccessException | InvocationTargetException e) {
 			System.err.println("Error returning to the main menu: " + e.getMessage());
