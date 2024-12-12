@@ -3,7 +3,6 @@ package com.example.demo.ui;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.Sound;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
