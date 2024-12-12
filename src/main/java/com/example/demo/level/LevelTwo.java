@@ -35,6 +35,7 @@ public class LevelTwo extends LevelParent {
 			levelView.hideBossHealth();
 		}
 		else if (boss.isDestroyed()) {
+			levelView.hideLevelTwo();
 			levelView.hideBossHealth();
 			goToNextLevel(NEXT_LEVEL);
 		}
@@ -57,6 +58,7 @@ public class LevelTwo extends LevelParent {
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
 		levelView.displayShield();
+		levelView.showLevelTwo();
 		levelView.showBossHealth();
 		return scene;
 	}

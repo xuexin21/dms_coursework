@@ -31,6 +31,7 @@ public class LevelThree extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
+			levelView.hideLevelThree();
 			levelView.hideKillCount();
 			getUser().reset();
 			goToNextLevel(NEXT_LEVEL);
@@ -96,6 +97,7 @@ public class LevelThree extends LevelParent {
 	@Override
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
+		levelView.showLevelThree();
 		levelView.showKillCount();
 		return scene;
 	}

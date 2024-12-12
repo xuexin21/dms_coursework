@@ -28,6 +28,7 @@ public class LevelOne extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
+			levelView.hideLevelOne();
 			levelView.hideKillCount();
 			goToNextLevel(NEXT_LEVEL);
 		}
@@ -71,6 +72,7 @@ public class LevelOne extends LevelParent {
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
 		levelView.showKillCount();
+		levelView.showLevelOne();
 		return scene;
 	}
 

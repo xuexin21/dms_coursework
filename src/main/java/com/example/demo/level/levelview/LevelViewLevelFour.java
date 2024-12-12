@@ -3,6 +3,7 @@ package com.example.demo.level.levelview;
 import com.example.demo.model.Boss;
 import com.example.demo.model.SecondBoss;
 import com.example.demo.view.BossHealthDisplay;
+import com.example.demo.view.LevelFourDisplay;
 import com.example.demo.view.ShieldImage;
 import javafx.scene.Group;
 
@@ -11,6 +12,7 @@ public class LevelViewLevelFour extends LevelView {
 	private final Group root;
 	private final ShieldImage firstBossShieldImage;
 	private final ShieldImage secondBossShieldImage;
+	private final LevelFourDisplay levelFourDisplay;
 	private final BossHealthDisplay firstBossHealthDisplay;
 	private final BossHealthDisplay secondBossHealthDisplay;
 
@@ -19,6 +21,7 @@ public class LevelViewLevelFour extends LevelView {
 		this.root = root;
 		this.firstBossShieldImage = new ShieldImage();
 		this.secondBossShieldImage = new ShieldImage();
+		this.levelFourDisplay = new LevelFourDisplay();
 		this.firstBossHealthDisplay = new BossHealthDisplay(bossHealth);
 		this.secondBossHealthDisplay = new BossHealthDisplay(bossHealth);
 	}
@@ -95,5 +98,13 @@ public class LevelViewLevelFour extends LevelView {
 
 	public void secondBossUpdateBossHealth(int bossHealth) {
 		secondBossHealthDisplay.updateBossHealth(bossHealth);
+	}
+
+	public void showLevelFour () {
+		root.getChildren().add(levelFourDisplay);
+	}
+
+	public void hideLevelFour () {
+		levelFourDisplay.hideLevelFourText();
 	}
 }

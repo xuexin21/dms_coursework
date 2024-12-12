@@ -2,6 +2,7 @@ package com.example.demo.level.levelview;
 
 import com.example.demo.model.Boss;
 import com.example.demo.view.BossHealthDisplay;
+import com.example.demo.view.LevelTwoDisplay;
 import com.example.demo.view.ShieldImage;
 import javafx.scene.Group;
 
@@ -10,12 +11,14 @@ public class LevelViewLevelTwo extends LevelView {
 	private final Group root;
 	private final ShieldImage shieldImage;
 	private final BossHealthDisplay bossHealthDisplay;
+	private final LevelTwoDisplay levelTwoDisplay;
 	
 	public LevelViewLevelTwo(Group root, int heartsToDisplay, int bossHealth) {
 		super(root, heartsToDisplay);
 		this.root = root;
 		this.shieldImage = new ShieldImage();
 		this.bossHealthDisplay = new BossHealthDisplay(bossHealth);
+		this.levelTwoDisplay = new LevelTwoDisplay();
 	}
 	
 	public void showShield() {
@@ -53,5 +56,13 @@ public class LevelViewLevelTwo extends LevelView {
 
 	public void updateBossHealth(int bossHealth) {
 		bossHealthDisplay.updateBossHealth(bossHealth);
+	}
+
+	public void showLevelTwo () {
+		root.getChildren().add(levelTwoDisplay);
+	}
+
+	public void hideLevelTwo () {
+		levelTwoDisplay.hideLevelTwoText();
 	}
 }

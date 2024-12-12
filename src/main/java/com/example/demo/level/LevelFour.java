@@ -49,6 +49,7 @@ public class LevelFour extends LevelParent {
 		else if (firstboss.isDestroyed() && (secondBossSpawned && secondBoss.isDestroyed())) {
 			levelView.firstBossHideBossHealth();
 			levelView.secondBossHideBossHealth();
+			levelView.hideLevelFour();
 			winGame();
 		}
 	}
@@ -96,6 +97,7 @@ public class LevelFour extends LevelParent {
 	public Scene initializeScene() {
 		Scene scene = super.initializeScene();
 		levelView.firstBossDisplayShield();
+		levelView.showLevelFour();
 		levelView.firstBossShowBossHealth();
 		return scene;
 	}
