@@ -21,4 +21,8 @@ public class KillCountDisplay extends StackPane {
     public void updateKillCount(int killCount) {
         this.killCountText.setText("Kills: " + killCount + "/" + initialKillCount);
     }
+
+    public void hideKillCount() {
+        this.killCountText.setVisible(false);
+    }
 }

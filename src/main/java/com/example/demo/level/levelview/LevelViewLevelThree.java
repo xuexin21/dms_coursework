@@ -21,4 +21,8 @@ public class LevelViewLevelThree extends LevelView {
 	public void updateKillCount(int killCount) {
 		killCountDisplay.updateKillCount(killCount);
 	}
+
+	public void hideKillCount () {
+		killCountDisplay.hideKillCount();
+	}
 }

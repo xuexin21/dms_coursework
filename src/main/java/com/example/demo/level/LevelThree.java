@@ -27,9 +27,11 @@ public class LevelThree extends LevelParent {
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
+			levelView.hideKillCount();
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
+			levelView.hideKillCount();
 			getUser().reset();
 			goToNextLevel(NEXT_LEVEL);
 		}
