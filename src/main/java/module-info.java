@@ -2,13 +2,9 @@ module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
-
-    opens com.example.demo.controller to javafx.fxml;
-    opens com.example.demo.level to javafx.fxml;
-    opens com.example.demo.level.levelview to javafx.fxml;
-    opens com.example.demo.model to javafx.fxml;
-    opens com.example.demo.projectile to javafx.fxml;
-    opens com.example.demo.view to javafx.fxml;
+    requires org.junit.jupiter.api;
+    requires org.junit.platform.commons;
+    requires org.junit.platform.launcher;
 
     exports com.example.demo.controller;
     exports com.example.demo.level;
@@ -17,7 +13,14 @@ module com.example.demo {
     exports com.example.demo.projectile;
     exports com.example.demo.view;
     exports com.example.demo.audio;
-    opens com.example.demo.audio to javafx.fxml;
     exports com.example.demo.controller.inGame;
-    opens com.example.demo.controller.inGame to javafx.fxml;
+
+    opens com.example.demo.audio to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.controller to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.controller.inGame to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.level to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.level.levelview to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.model to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.projectile to org.junit.platform.commons, org.junit.platform.launcher;
+    opens com.example.demo.view to org.junit.platform.commons, org.junit.platform.launcher;
 }
