@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 public class LevelThree extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.png";
+	private static final String CURRENT_LEVEL = "com.example.demo.level.LevelThree";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelFour";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int TOTAL_BUTTERFLIES = 2;
-	private	static final int TOTAL_OBSTACLES = 1;
+	private	static final int TOTAL_OBSTACLES = 2;
 	private static final int KILLS_TO_ADVANCE = 50;
 	private static final double ENEMY_SPAWN_PROBABILITY = .04;
 	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
@@ -29,13 +30,13 @@ public class LevelThree extends LevelParent {
 		if (userIsDestroyed()) {
 			levelView.hideLevelThree();
 			levelView.hideKillCount();
-			loseGame();
+			replayThisLevel(CURRENT_LEVEL);
 		}
 		else if (userHasReachedKillTarget()) {
 			levelView.hideLevelThree();
 			levelView.hideKillCount();
 			getUser().reset();
-			goToNextLevel(NEXT_LEVEL);
+			checkToNextLevel(NEXT_LEVEL);
 		}
 	}
 

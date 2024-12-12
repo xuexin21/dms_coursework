@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
+	private static final String CURRENT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelThree";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
@@ -31,14 +32,14 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
-			loseGame();
 			levelView.hideLevelTwo();
 			levelView.hideBossHealth();
+			replayThisLevel(CURRENT_LEVEL);
 		}
 		else if (boss.isDestroyed()) {
 			levelView.hideLevelTwo();
 			levelView.hideBossHealth();
-			goToNextLevel(NEXT_LEVEL);
+			checkToNextLevel(NEXT_LEVEL);
 		}
 	}
 

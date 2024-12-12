@@ -10,10 +10,11 @@ import com.example.demo.model.UserPlane;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.FighterPlane;
 import com.example.demo.controller.Main;
-import com.example.demo.ui.ContinueButton;
-import com.example.demo.ui.ContinueMenu;
-import com.example.demo.ui.PauseButton;
-import com.example.demo.ui.PauseMenu;
+import com.example.demo.controller.inGame.LoseMenu;
+import com.example.demo.controller.inGame.WinMenu;
+import com.example.demo.controller.inGame.LevelMenu;
+import com.example.demo.controller.inGame.PauseButton;
+import com.example.demo.controller.inGame.PauseMenu;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -46,10 +47,13 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> butterflyUnits;
 	private final List<ActiveActorDestructible> obstacleUnits;
 
+	public static String currentLevelName = "com.example.demo.level.LevelOne";
+	public static String nextLevelName = "com.example.demo.level.LevelTwo";
 	private final Music music;
 	private final Sound sound;
-	private ContinueButton continueButton;
-	private ContinueMenu continueMenu;
+	private LoseMenu loseMenu;
+	private WinMenu winMenu;
+	private LevelMenu levelMenu;
 	private PauseButton pauseButton;
 	private PauseMenu pauseMenu;
 	private final Main main = new Main();
@@ -81,8 +85,9 @@ public abstract class LevelParent extends Observable {
 		this.currentNumberOfEnemies = 0;
 		this.music = music;
 		this.sound = sound;
-		this.continueButton = new ContinueButton(this::continueGame, sound);
-		continueMenu = new ContinueMenu(this::exitGame, this::returnToMenu, music, sound);
+		loseMenu = new LoseMenu(this, this::exitGame, this::returnToMenu, music, sound);
+		winMenu = new WinMenu(this::exitGame, this::returnToMenu, music, sound);
+		levelMenu = new LevelMenu(this, this::returnToMenu, music, sound);
 		this.pauseButton = new PauseButton(this::pauseGame, sound);
 		pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music,sound);
 		initializeTimeline();
@@ -105,7 +110,7 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
-		root.getChildren().addAll(pauseButton, pauseMenu, continueButton, continueMenu);
+		root.getChildren().addAll(pauseButton, pauseMenu, loseMenu, winMenu, levelMenu);
 		return scene;
 	}
 
@@ -117,9 +122,33 @@ public abstract class LevelParent extends Observable {
 
 	public void goToNextLevel(String levelName) {
 		timeline.stop();
-		sound.playNextLevelSound();
 		setChanged();
 		notifyObservers(levelName);
+	}
+
+	public void checkToNextLevel(String levelName) {
+		timeline.stop();
+		clearAllActors();
+		nextLevelName = levelName;
+		pauseButton.hidePauseButton();
+		levelView.hideHeartDisplay();
+		levelMenu.showLevelMenu();
+		levelMenu.setVisible(true);
+		gameActive = false; // Disable gameplay
+	}
+
+	public void replayThisLevel(String levelName) {
+		timeline.stop();
+		clearAllActors();
+		currentLevelName = levelName;
+		music.stopBackgroundMusic();
+		levelView.showGameOverImage();
+		sound.playGameOverSound();
+		pauseButton.hidePauseButton();
+		levelView.hideHeartDisplay();
+		loseMenu.showLoseMenu();
+		loseMenu.setVisible(true);
+		gameActive = false; // Disable gameplay
 	}
 
 	private void updateScene() {
@@ -323,22 +352,13 @@ public abstract class LevelParent extends Observable {
 	protected void winGame() {
 		timeline.stop();
 		clearAllActors(); // Clear all entities
+		levelView.hideHeartDisplay();
 		music.stopBackgroundMusic();
 		sound.playWinSound();
 		levelView.showWinImage();
+		winMenu.showWinMenu();
+		winMenu.setVisible(true);
 		pauseButton.hidePauseButton();
-		continueButton.showContinueButton();
-		gameActive = false; // Disable gameplay
-	}
-
-	protected void loseGame() {
-		timeline.stop();
-		clearAllActors(); // Clear all entities
-		music.stopBackgroundMusic();
-		levelView.showGameOverImage();
-		sound.playGameOverSound();
-		pauseButton.hidePauseButton();
-		continueButton.showContinueButton();
 		gameActive = false; // Disable gameplay
 	}
 
@@ -402,15 +422,6 @@ public abstract class LevelParent extends Observable {
 		isPaused = true;
 	}
 
-	private void continueGame() {
-		timeline.pause();
-		music.pauseBackgroundMusic();
-		continueMenu.showContinueMenu();
-		continueMenu.toFront();
-		continueMenu.setVisible(true);
-		isPaused = true;
-	}
-
 	private void exitGame() {
 		timeline.stop();
 		music.stopBackgroundMusic();
@@ -426,7 +437,9 @@ public abstract class LevelParent extends Observable {
 
 	private void returnToMenu() {
 		try {
-			continueMenu.setVisible(false);
+			sound.stopGameOverSound();
+			sound.stopWinSound();
+			winMenu.setVisible(false);
 			timeline.stop();
 			Stage stage = (Stage) root.getScene().getWindow();
 			stage.sizeToScene();

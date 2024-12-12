@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 public class LevelOne extends LevelParent {
 	
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
+	private static final String CURRENT_LEVEL = "com.example.demo.level.LevelOne";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
@@ -26,12 +27,12 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			levelView.hideLevelOne();
 			levelView.hideKillCount();
-			loseGame();
+			replayThisLevel(CURRENT_LEVEL);
 		}
 		else if (userHasReachedKillTarget()) {
 			levelView.hideLevelOne();
 			levelView.hideKillCount();
-			goToNextLevel(NEXT_LEVEL);
+			checkToNextLevel(NEXT_LEVEL);
 		}
 	}
 

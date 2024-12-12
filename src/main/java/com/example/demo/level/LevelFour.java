@@ -13,9 +13,10 @@ import javafx.scene.Scene;
 public class LevelFour extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background4.png";
+	private static final String CURRENT_NAME = "com.example.demo.level.LevelFour";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private static final int TOTAL_BUTTERFLIES = 2;
-	private	static final int TOTAL_OBSTACLES = 1;
+	private	static final int TOTAL_OBSTACLES = 2;
 	private static final double OBSTACLE_SPAWN_PROBABILITY = .01;
 	private static final double BUTTERFLY_SPAWN_PROBABILITY = .007;
 	private static final int bossHealth = 100;
@@ -42,10 +43,10 @@ public class LevelFour extends LevelParent {
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
-			loseGame();
 			levelView.hideLevelFour();
 			levelView.firstBossHideBossHealth();
 			levelView.secondBossHideBossHealth();
+			replayThisLevel(CURRENT_NAME);
 		}
 		else if (firstboss.isDestroyed() && (secondBossSpawned && secondBoss.isDestroyed())) {
 			levelView.firstBossHideBossHealth();
