@@ -29,4 +29,8 @@ public class UserProjectile extends Projectile {
 	public static void resetProjectileVelocity() {
 		HORIZONTAL_VELOCITY = 15;
 	}
+
+	public static int getProjectileSpeed() {
+		return HORIZONTAL_VELOCITY;
+	}
 }

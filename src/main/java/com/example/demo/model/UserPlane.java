@@ -121,4 +121,12 @@ public class UserPlane extends FighterPlane {
 		VERTICAL_VELOCITY = 10;
 		UserProjectile.resetProjectileVelocity();
 	}
+
+	public int getVerticalVelocity() {
+		return VERTICAL_VELOCITY;
+	}
+
+	public int getHorizontalVelocity() {
+		return HORIZONTAL_VELOCITY;
+	}
 }
