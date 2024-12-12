@@ -7,31 +7,49 @@ public class Sound {
     private static final String BUTTON_SOUND = "/com/example/demo/sounds/button_sound.mp3";
     private static final String ENEMY_PROJECTILE_SOUND = "/com/example/demo/sounds/enemy_projectile.mp3";
     private static final String EXPLOSION_SOUND = "/com/example/demo/sounds/explosion.mp3";
+    private static final String GAME_OVER_SOUND = "/com/example/demo/sounds/gameover.mp3";
+    private static final String NO_SHIELD_SOUND = "/com/example/demo/sounds/no_shield.mp3";
     private static final String POWERUP_SOUND = "/com/example/demo/sounds/powerup.mp3";
+    private static final String SHIELD_SOUND = "/com/example/demo/sounds/shield.mp3";
     private static final String USER_PROJECTILE_SOUND = "/com/example/demo/sounds/user_projectile.mp3";
+
     private Media button;
     private Media explosion;
     private Media enemyProjectile;
+    private Media gameover;
+    private Media noShield;
     private Media powerUp;
+    private Media shield;
+
     private Media userProjectile;
     private MediaPlayer buttonSound;
     private MediaPlayer explosionSound;
+    private MediaPlayer gameoverSound;
+    private MediaPlayer noShieldSound;
     private MediaPlayer enemyProjectileSound;
     private MediaPlayer powerUpSound;
+    private MediaPlayer shieldSound;
     private MediaPlayer userProjectileSound;
+
     private boolean isMuted = false;
 
     public Sound() {
         button = new Media(getClass().getResource(BUTTON_SOUND).toExternalForm());
         explosion = new Media(getClass().getResource(EXPLOSION_SOUND).toExternalForm());
         enemyProjectile = new Media(getClass().getResource(ENEMY_PROJECTILE_SOUND).toExternalForm());
+        gameover = new Media(getClass().getResource(GAME_OVER_SOUND).toExternalForm());
+        noShield = new Media(getClass().getResource(NO_SHIELD_SOUND).toExternalForm());
         powerUp = new Media(getClass().getResource(POWERUP_SOUND).toExternalForm());
+        shield = new Media(getClass().getResource(SHIELD_SOUND).toExternalForm());
         userProjectile = new Media(getClass().getResource(USER_PROJECTILE_SOUND).toExternalForm());
 
         buttonSound = new MediaPlayer(button);
         explosionSound = new MediaPlayer(explosion);
+        gameoverSound = new MediaPlayer(gameover);
+        noShieldSound = new MediaPlayer(noShield);
         enemyProjectileSound = new MediaPlayer(enemyProjectile);
         powerUpSound = new MediaPlayer(powerUp);
+        shieldSound = new MediaPlayer(shield);
         userProjectileSound = new MediaPlayer(userProjectile);
     }
 
@@ -39,27 +57,49 @@ public class Sound {
         if (isMuted) return;
         buttonSound.stop();
         buttonSound.play();
+        buttonSound.setVolume(1.0);
     }
 
     public void playExplosionSound() {
         if (isMuted) return;
         explosionSound.stop();
         explosionSound.play();
-        explosionSound.setVolume(70);
+        explosionSound.setVolume(0.9);
     }
 
     public void playEnemyProjectileSound() {
         if (isMuted) return;
         enemyProjectileSound.stop();
         enemyProjectileSound.play();
-        enemyProjectileSound.setVolume(30);
+        enemyProjectileSound.setVolume(0.8);
+    }
+
+    public void playGameOverSound() {
+        if (isMuted) return;
+        gameoverSound.stop();
+        gameoverSound.play();
+        gameoverSound.setVolume(1.0);
+    }
+
+    public void playNoShieldSound() {
+        if (isMuted) return;
+        noShieldSound.stop();
+        noShieldSound.play();
+        noShieldSound.setVolume(1.0);
     }
 
     public void playPowerUpSound() {
         if (isMuted) return;
         powerUpSound.stop();
         powerUpSound.play();
-        powerUpSound.setVolume(50);
+        powerUpSound.setVolume(1.0);
+    }
+
+    public void playShieldSound() {
+        if (isMuted) return;
+        shieldSound.stop();
+        shieldSound.play();
+        shieldSound.setVolume(1.0);
     }
 
     public void playUserProjectileSound() {

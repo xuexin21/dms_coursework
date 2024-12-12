@@ -20,12 +20,15 @@ public class LevelFour extends LevelParent {
 	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
 	private static final int bossHealth = 100;
 	private final Boss firstboss;
+	private Sound sound;
 	private SecondBoss secondBoss;
 	private boolean secondBossSpawned;
 	private LevelViewLevelFour levelView;
+	private boolean shieldActivated = false;
 
 	public LevelFour(double screenHeight, double screenWidth, Music music, Sound sound) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, sound);
+		this.sound = sound;
 		firstboss = new Boss(bossHealth);
 		secondBoss = new SecondBoss();
 		secondBossSpawned = false;
@@ -104,8 +107,18 @@ public class LevelFour extends LevelParent {
 		levelView.firstBossUpdateBossHealth(firstboss.getHealth());
 		levelView.firstBossUpdateHealthDisplayPosition(firstboss);
 
-		if (firstboss.isShielded()) levelView.firstBossShowShield();
-		else levelView.firstBossHideShield();
+		if (firstboss.isShielded()) {
+			if (!shieldActivated) {
+				sound.playShieldSound();
+			}
+			shieldActivated = true;
+			levelView.firstBossShowShield();
+		}
+		else {
+			if (shieldActivated) sound.playNoShieldSound();
+			shieldActivated = false;
+			levelView.firstBossHideShield();
+		}
 
 		if (firstboss.isDestroyed()) levelView.firstBossHideBossHealth();
 
@@ -113,8 +126,16 @@ public class LevelFour extends LevelParent {
 		levelView.secondBossUpdateBossHealth(secondBoss.getHealth());
 		levelView.secondBossUpdateHealthDisplayPosition(secondBoss);
 
-		if (secondBoss.isShielded()) levelView.secondBossShowShield();
-		else levelView.secondBossHideShield();
+		if (secondBoss.isShielded()) {
+			if (!shieldActivated) sound.playShieldSound();
+			shieldActivated = true;
+			levelView.secondBossShowShield();
+		}
+		else {
+			if (shieldActivated) sound.playNoShieldSound();
+			shieldActivated = false;
+			levelView.secondBossHideShield();
+		}
 
 		if(secondBoss.isDestroyed()) levelView.secondBossHideBossHealth();
 	}

@@ -12,12 +12,15 @@ public class LevelTwo extends LevelParent {
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelThree";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
+	private Sound sound;
 	private static final int bossHealth = 100;
 	private LevelViewLevelTwo levelView;
+	private boolean shieldActivated = false;
 
 	public LevelTwo(double screenHeight, double screenWidth, Music music, Sound sound) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, music, sound);
 		boss = new Boss(bossHealth);
+		this.sound = sound;
 	}
 
 	@Override
@@ -65,8 +68,12 @@ public class LevelTwo extends LevelParent {
 		levelView.updateShieldPosition(boss);
 
 		if (boss.isShielded()) {
+			if (!shieldActivated) sound.playShieldSound();
+			shieldActivated = true;
 			levelView.showShield();
 		} else {
+			if (shieldActivated) sound.playNoShieldSound();
+			shieldActivated = false;
 			levelView.hideShield();
 		}
 

@@ -23,14 +23,14 @@ public class Music {
         if (isMuted) return;
         mainMenuMusic.play();
         mainMenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
-        mainMenuMusic.setVolume(20);
+        mainMenuMusic.setVolume(1.0);
     }
 
     public void playBackgroundMusic() {
         if (isMuted) return;
         backgroundMusic.play();
         backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
-        backgroundMusic.setVolume(30);
+        backgroundMusic.setVolume(0.5);
     }
 
     public void stopBackgroundMusic() {

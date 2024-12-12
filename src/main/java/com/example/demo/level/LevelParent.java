@@ -334,6 +334,7 @@ public abstract class LevelParent extends Observable {
 		clearAllActors(); // Clear all entities
 		music.stopBackgroundMusic();
 		levelView.showGameOverImage();
+		sound.playGameOverSound();
 		pauseButton.hidePauseButton();
 		continueButton.showContinueButton();
 		gameActive = false; // Disable gameplay
