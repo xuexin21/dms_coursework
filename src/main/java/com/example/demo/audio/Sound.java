@@ -12,6 +12,7 @@ public class Sound {
     private static final String NO_SHIELD_SOUND = "/com/example/demo/sounds/no_shield.mp3";
     private static final String POWERUP_SOUND = "/com/example/demo/sounds/powerup.mp3";
     private static final String SHIELD_SOUND = "/com/example/demo/sounds/shield.mp3";
+    private static final String WIN_SOUND = "/com/example/demo/sounds/win.mp3";
     private static final String USER_PROJECTILE_SOUND = "/com/example/demo/sounds/user_projectile.mp3";
 
     private Media button;
@@ -22,8 +23,9 @@ public class Sound {
     private Media noShield;
     private Media powerUp;
     private Media shield;
-
+    private Media win;
     private Media userProjectile;
+
     private MediaPlayer buttonSound;
     private MediaPlayer explosionSound;
     private MediaPlayer gameoverSound;
@@ -32,6 +34,7 @@ public class Sound {
     private MediaPlayer enemyProjectileSound;
     private MediaPlayer powerUpSound;
     private MediaPlayer shieldSound;
+    private MediaPlayer winSound;
     private MediaPlayer userProjectileSound;
 
     private boolean isMuted = false;
@@ -45,6 +48,7 @@ public class Sound {
         noShield = new Media(getClass().getResource(NO_SHIELD_SOUND).toExternalForm());
         powerUp = new Media(getClass().getResource(POWERUP_SOUND).toExternalForm());
         shield = new Media(getClass().getResource(SHIELD_SOUND).toExternalForm());
+        win = new Media(getClass().getResource(WIN_SOUND).toExternalForm());
         userProjectile = new Media(getClass().getResource(USER_PROJECTILE_SOUND).toExternalForm());
 
         buttonSound = new MediaPlayer(button);
@@ -55,6 +59,7 @@ public class Sound {
         enemyProjectileSound = new MediaPlayer(enemyProjectile);
         powerUpSound = new MediaPlayer(powerUp);
         shieldSound = new MediaPlayer(shield);
+        winSound = new MediaPlayer(win);
         userProjectileSound = new MediaPlayer(userProjectile);
     }
 
@@ -114,11 +119,18 @@ public class Sound {
         shieldSound.setVolume(1.0);
     }
 
+    public void playWinSound() {
+        if (isMuted) return;
+        winSound.stop();
+        winSound.play();
+        winSound.setVolume(1.0);
+    }
+
     public void playUserProjectileSound() {
         if (isMuted) return;
         userProjectileSound.stop();
         userProjectileSound.play();
-        userProjectileSound.setVolume(30);
+        userProjectileSound.setVolume(0.7);
     }
 
     public boolean isMuted() {

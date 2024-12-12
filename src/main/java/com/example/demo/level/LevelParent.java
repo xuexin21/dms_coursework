@@ -324,6 +324,7 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		clearAllActors(); // Clear all entities
 		music.stopBackgroundMusic();
+		sound.playWinSound();
 		levelView.showWinImage();
 		pauseButton.hidePauseButton();
 		continueButton.showContinueButton();
