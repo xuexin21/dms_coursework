@@ -5,8 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 public class KillCountDisplay extends StackPane {
-    private static final int xPosition = Main.SCREEN_WIDTH - 200;
-    private static final int yPosition = Main.SCREEN_HEIGHT - 740;
+    private static final int xPosition = Main.SCREEN_WIDTH - 220;
+    private static final int yPosition = Main.SCREEN_HEIGHT - 715;
     private final int initialKillCount;
     private final Label killCountText;
 
