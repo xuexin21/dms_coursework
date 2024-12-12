@@ -45,7 +45,7 @@ public class LoseMenu extends StackPane {
         });
         exitButton.getStyleClass().add("button");
 
-        Button returnToMainMenuButton = new Button("Returnadd to Main Menu");
+        Button returnToMainMenuButton = new Button("Return to Main Menu");
         returnToMainMenuButton.setOnAction(e -> {
             sound.playButtonSound();
             onReturnToMainMenu.run();
