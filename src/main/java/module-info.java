@@ -16,8 +16,8 @@ module com.example.demo {
     exports com.example.demo.model;
     exports com.example.demo.projectile;
     exports com.example.demo.view;
-    exports com.example.demo.ui;
-    opens com.example.demo.ui to javafx.fxml;
     exports com.example.demo.audio;
     opens com.example.demo.audio to javafx.fxml;
+    exports com.example.demo.controller.inGame;
+    opens com.example.demo.controller.inGame to javafx.fxml;
 }
