@@ -43,6 +43,7 @@ public class LevelFour extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
+			levelView.hideLevelFour();
 			levelView.firstBossHideBossHealth();
 			levelView.secondBossHideBossHealth();
 		}
