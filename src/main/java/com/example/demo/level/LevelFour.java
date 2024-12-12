@@ -17,7 +17,7 @@ public class LevelFour extends LevelParent {
 	private static final int TOTAL_BUTTERFLIES = 2;
 	private	static final int TOTAL_OBSTACLES = 1;
 	private static final double OBSTACLE_SPAWN_PROBABILITY = .01;
-	private static final double BUTTERFLY_SPAWN_PROBABILITY = .01;
+	private static final double BUTTERFLY_SPAWN_PROBABILITY = .007;
 	private static final int bossHealth = 100;
 	private final Boss firstboss;
 	private Sound sound;
