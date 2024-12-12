@@ -10,7 +10,7 @@ public class LevelView {
 	
 	private static final double HEART_DISPLAY_X_POSITION = (double) Main.SCREEN_WIDTH / 2 - 645;
 	private static final double HEART_DISPLAY_Y_POSITION = (double) Main.SCREEN_HEIGHT / 2 - 350;
-	private static final double WIN_IMAGE_X_POSITION = (double) Main.SCREEN_WIDTH/2 - 240;
+	private static final double WIN_IMAGE_X_POSITION = (double) Main.SCREEN_WIDTH/2 - 225;
 	private static final double WIN_IMAGE_Y_POSITION = (double) Main.SCREEN_HEIGHT / 2 - 200;
 	private static final double LOSS_SCREEN_X_POSITION = (double) Main.SCREEN_WIDTH / 2 - 330;
 	private static final double LOSS_SCREEN_Y_POSITION = (double) Main.SCREEN_HEIGHT / 2 - 285;
@@ -28,6 +28,10 @@ public class LevelView {
 	
 	public void showHeartDisplay() {
 		root.getChildren().add(heartDisplay.getContainer());
+	}
+
+	public void hideHeartDisplay() {
+		root.getChildren().remove(heartDisplay.getContainer());
 	}
 
 	public void showWinImage() {
