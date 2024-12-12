@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.controller.Main;
 import com.example.demo.projectile.BossProjectile;
 
 import java.util.*;
@@ -7,8 +8,8 @@ import java.util.*;
 public class Boss extends FighterPlane {
 
 	private static final String IMAGE_NAME = "bossplane.png";
-	private static final double INITIAL_X_POSITION = 900.0;
-	private static final double INITIAL_Y_POSITION = 400;
+	private static final double INITIAL_X_POSITION = (double) Main.SCREEN_WIDTH - 400;
+	private static final double INITIAL_Y_POSITION = (double) Main.SCREEN_HEIGHT - 350;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 60.0;
 	private static final double BOSS_FIRE_RATE = .04;
 	private static final double BOSS_SHIELD_PROBABILITY = .002;
