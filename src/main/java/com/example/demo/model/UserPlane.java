@@ -1,14 +1,15 @@
 package com.example.demo.model;
 
+import com.example.demo.controller.Main;
 import com.example.demo.projectile.UserProjectile;
 
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = 5;
-	private static final double Y_LOWER_BOUND = 660.0;
+	private static final double Y_LOWER_BOUND = (double) Main.SCREEN_HEIGHT - 90;
 	private static final double X_UPPER_BOUND = 0;
-	private static final double X_LOWER_BOUND = 600.0;
+	private static final double X_LOWER_BOUND = (double) Main.SCREEN_WIDTH - 700;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 40;
