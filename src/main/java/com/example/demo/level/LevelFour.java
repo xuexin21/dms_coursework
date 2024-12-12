@@ -115,6 +115,8 @@ public class LevelFour extends LevelParent {
 
 		if (secondBoss.isShielded()) levelView.secondBossShowShield();
 		else levelView.secondBossHideShield();
+
+		if(secondBoss.isDestroyed()) levelView.secondBossHideBossHealth();
 	}
 
 	private void spawnSecondBoss() {

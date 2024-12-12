@@ -10,6 +10,8 @@ import com.example.demo.model.UserPlane;
 import com.example.demo.model.ActiveActorDestructible;
 import com.example.demo.model.FighterPlane;
 import com.example.demo.controller.Main;
+import com.example.demo.ui.ContinueButton;
+import com.example.demo.ui.ContinueMenu;
 import com.example.demo.ui.PauseButton;
 import com.example.demo.ui.PauseMenu;
 import javafx.animation.*;
@@ -46,10 +48,13 @@ public abstract class LevelParent extends Observable {
 
 	private final Music music;
 	private final Sound sound;
+	private ContinueButton continueButton;
+	private ContinueMenu continueMenu;
 	private PauseButton pauseButton;
 	private PauseMenu pauseMenu;
 	private final Main main = new Main();
 	private boolean isPaused = false;
+	private boolean gameActive = true;
 	
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
@@ -76,6 +81,8 @@ public abstract class LevelParent extends Observable {
 		this.currentNumberOfEnemies = 0;
 		this.music = music;
 		this.sound = sound;
+		this.continueButton = new ContinueButton(this::continueGame, sound);
+		continueMenu = new ContinueMenu(this::exitGame, this::returnToMenu, music, sound);
 		this.pauseButton = new PauseButton(this::pauseGame, sound);
 		pauseMenu = new PauseMenu(this::resumeGame, this::returnToMenu, music,sound);
 		initializeTimeline();
@@ -98,7 +105,7 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
-		root.getChildren().addAll(pauseButton, pauseMenu);
+		root.getChildren().addAll(pauseButton, pauseMenu, continueButton, continueMenu);
 		return scene;
 	}
 
@@ -146,6 +153,7 @@ public abstract class LevelParent extends Observable {
 		background.setFitWidth(screenWidth);
 		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
+				if (!gameActive) return;
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP || kc == KeyCode.W) user.moveUp();
 				if (kc == KeyCode.DOWN || kc == KeyCode.S) user.moveDown();
@@ -156,6 +164,7 @@ public abstract class LevelParent extends Observable {
 		});
 		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
+				if (!gameActive) return;
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP || kc == KeyCode.DOWN || kc == KeyCode.W || kc == KeyCode.S) user.stopVertically();
 				if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT || kc == KeyCode.A || kc == KeyCode.D) user.stopHorizontally();
@@ -163,6 +172,7 @@ public abstract class LevelParent extends Observable {
 		});
 		background.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
+				if (!gameActive) return;
 				if (e.getButton() == MouseButton.PRIMARY) {
 					fireProjectile();
 				}
@@ -172,6 +182,9 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
+		if (!gameActive) {
+			return; // Do nothing if the game is not active
+		}
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
@@ -212,6 +225,24 @@ public abstract class LevelParent extends Observable {
 				.collect(Collectors.toList());
 		root.getChildren().removeAll(destroyedActors);
 		actors.removeAll(destroyedActors);
+	}
+
+	private void clearAllActors() {
+		// Remove all actors from their respective lists and from the root group
+		root.getChildren().removeAll(friendlyUnits);
+		root.getChildren().removeAll(enemyUnits);
+		root.getChildren().removeAll(userProjectiles);
+		root.getChildren().removeAll(enemyProjectiles);
+		root.getChildren().removeAll(butterflyUnits);
+		root.getChildren().removeAll(obstacleUnits);
+
+		// Clear the lists
+		friendlyUnits.clear();
+		enemyUnits.clear();
+		userProjectiles.clear();
+		enemyProjectiles.clear();
+		butterflyUnits.clear();
+		obstacleUnits.clear();
 	}
 
 	private void handlePlaneCollisions() {
@@ -290,16 +321,22 @@ public abstract class LevelParent extends Observable {
 
 	protected void winGame() {
 		timeline.stop();
+		clearAllActors(); // Clear all entities
 		music.stopBackgroundMusic();
 		levelView.showWinImage();
 		pauseButton.hidePauseButton();
+		continueButton.showContinueButton();
+		gameActive = false; // Disable gameplay
 	}
 
 	protected void loseGame() {
 		timeline.stop();
+		clearAllActors(); // Clear all entities
 		music.stopBackgroundMusic();
 		levelView.showGameOverImage();
 		pauseButton.hidePauseButton();
+		continueButton.showContinueButton();
+		gameActive = false; // Disable gameplay
 	}
 
 	public static UserPlane getUser() {
@@ -362,6 +399,22 @@ public abstract class LevelParent extends Observable {
 		isPaused = true;
 	}
 
+	private void continueGame() {
+		timeline.pause();
+		music.pauseBackgroundMusic();
+		continueMenu.showContinueMenu();
+		continueMenu.toFront();
+		continueMenu.setVisible(true);
+		isPaused = true;
+	}
+
+	private void exitGame() {
+		timeline.stop();
+		music.stopBackgroundMusic();
+		Stage stage = (Stage) root.getScene().getWindow();
+		stage.close();
+	}
+
 	private void resumeGame() {
 		timeline.play();
 		music.playBackgroundMusic();
@@ -370,6 +423,7 @@ public abstract class LevelParent extends Observable {
 
 	private void returnToMenu() {
 		try {
+			continueMenu.setVisible(false);
 			timeline.stop();
 			Stage stage = (Stage) root.getScene().getWindow();
 			stage.sizeToScene();

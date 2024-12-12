@@ -11,8 +11,8 @@ public class LevelView {
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 	private static final int WIN_IMAGE_X_POSITION = 435;
 	private static final int WIN_IMAGE_Y_POSITION = 175;
-	private static final int LOSS_SCREEN_X_POSITION = 375;
-	private static final int LOSS_SCREEN_Y_POSITION = 155;
+	private static final int LOSS_SCREEN_X_POSITION = 320;
+	private static final int LOSS_SCREEN_Y_POSITION = 90;
 	private final Group root;
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
