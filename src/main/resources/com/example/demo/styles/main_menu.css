@@ -1,50 +1,52 @@
+/* Title Style */
 .title-label {
-    -fx-font-size: 150px; /* Large font size */
-    -fx-font-weight: bold; /* Bold text */
-    -fx-text-fill: white; /* White text color */
-    -fx-padding: 20px; /* Padding around the text */
-    -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 1, 1); /* Shadow effect */
+    -fx-font-size: 130px; /* Large and bold for dramatic impact */
+    -fx-font-weight: bold; /* Emphasize importance */
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #FFD700, #FF4500); /* Gold to fiery orange gradient */
+    -fx-font-family: "Arial Black", sans-serif; /* Bold and sharp font */
+    -fx-stroke: #000000; /* Black outline for better readability */
+    -fx-stroke-width: 2; /* Outline thickness */
+    -fx-padding: 20px; /* Add spacing for balance */
+    -fx-alignment: center; /* Center alignment */
+    -fx-effect:
+            dropshadow(gaussian, #8B0000, 25, 0.7, 5, 5), /* Outer drop shadow */
+            innershadow(gaussian, #FF6347, 15, 0.5, 0, 0); /* Inner glow effect */
+    -fx-background-color: transparent; /* Ensure no conflicting background */
 }
 
+
 .button {
-    -fx-background-color: #A7D8DD; /* Green background */
+    -fx-background-color: #FF6347; /* Tomato background */
     -fx-text-fill: white;           /* White text */
-    -fx-font-size: 18px;            /* Increase font size */
+    -fx-font-size: 20px;            /* Increased font size */
     -fx-font-weight: bold;
-    -fx-padding: 15px 30px;         /* Add padding around the text */
-    -fx-border-radius: 10px;       /* Rounded corners */
-    -fx-background-radius: 10px;    /* Rounded background */
-    -fx-font-family: "Arial", sans-serif;
-    -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 1, 1); /* Shadow effect */
+    -fx-padding: 15px 40px;         /* More padding */
+    -fx-border-radius: 15px;       /* Rounded corners */
+    -fx-background-radius: 15px;    /* Rounded background */
+    -fx-font-family: "Roboto", sans-serif;
+    -fx-effect: dropshadow(gaussian, #8B0000, 12, 0.6, 2, 2); /* Deeper shadow */
 }
 
 .toggle {
-    -fx-background-color: #A7D8DD;
+    -fx-background-color: #FF7F50; /* Coral background */
     -fx-text-fill: white;
-    -fx-font-size: 18px;            /* Increase font size */
+    -fx-font-size: 20px;            /* Increase font size */
     -fx-font-weight: bold;
-    -fx-padding: 15px 30px;         /* Add padding around the text */
-    -fx-border-radius: 10px;       /* Rounded corners */
-    -fx-background-radius: 10px;    /* Rounded background */
-    -fx-font-family: "Arial", sans-serif;
-    -fx-effect: dropshadow(gaussian, #000000, 10, 0.5, 1, 1); /* Shadow effect */
+    -fx-padding: 15px 40px;         /* More padding */
+    -fx-border-radius: 15px;       /* Rounded corners */
+    -fx-background-radius: 15px;    /* Rounded background */
+    -fx-font-family: "Roboto", sans-serif;
+    -fx-effect: dropshadow(gaussian, #8B0000, 12, 0.6, 2, 2); /* Deeper shadow */
 }
 
-.toggle:hover {
-    -fx-font-size: 14px;
-    -fx-background-color: #68A0AF; /* Darker green on hover */
-    -fx-effect: dropshadow(gaussian, #000000, 15, 0.5, 1, 1); /* Stronger shadow on hover */
+.toggle:hover, .button:hover {
+    -fx-font-size: 20px;
+    -fx-background-color: #FF4500; /* Deep orange on hover */
+    -fx-effect: dropshadow(gaussian, #8B0000, 15, 0.7, 3, 3); /* Enhanced shadow */
 }
 
-.button:hover {
-    -fx-font-size: 14px;
-    -fx-background-color: #68A0AF; /* Darker green on hover */
-    -fx-effect: dropshadow(gaussian, #000000, 15, 0.5, 1, 1); /* Stronger shadow on hover */
-}
-
-.button:pressed {
-    -fx-background-color: #727E86; /* Even darker green when pressed */
-
+.button:pressed, .toggle:pressed {
+    -fx-background-color: #B22222; /* Dark red when pressed */
 }
 
 .layout {
@@ -53,16 +55,4 @@
     -fx-font-size: 16;
 }
 
-.popup-layout {
-    -fx-alignment: center;
-    -fx-padding: 20;
-}
 
-/* Style for the Volume Slider */
-.slider {
-    -fx-pref-width: 200px;
-    -fx-show-tick-marks: true;
-    -fx-show-tick-labels: true;
-    -fx-major-tick-unit: 0.1;
-    -fx-minor-tick-count: 5;
-}

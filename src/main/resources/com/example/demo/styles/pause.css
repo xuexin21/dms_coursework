@@ -1,31 +1,50 @@
 /* Title Style */
 .title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #f1c40f;
+    -fx-font-size: 36px; /* Larger font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-text-fill: #FFD700; /* Golden text color */
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #8B0000, 15, 0.7, 2, 2); /* Deep shadow for emphasis */
 }
 
 /* Toggle Button Style */
 .toggle {
-    -fx-background-color: #A7D8DD;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 10 20;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-background-color: #FF7F50; /* Coral color to match the theme */
+    -fx-text-fill: white; /* White text for contrast */
+    -fx-font-size: 18px; /* Slightly larger font size */
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px; /* Added padding for better spacing */
+    -fx-border-radius: 15; /* Rounded corners */
+    -fx-background-radius: 15; /* Consistent rounded background */
+    -fx-effect: dropshadow(gaussian, #8B0000, 12, 0.6, 2, 2); /* Shadow effect for depth */
+}
+
+.toggle:hover {
+    -fx-background-color: #FF6347; /* Tomato color on hover */
+    -fx-effect: dropshadow(gaussian, #8B0000, 15, 0.7, 3, 3); /* Enhanced shadow on hover */
+}
+
+.toggle:pressed {
+    -fx-background-color: #B22222; /* Dark red when pressed */
 }
 
 /* Button Style */
 .button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 10 20;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-background-color: #FF4500; /* Deep orange to complement the background */
+    -fx-text-fill: white; /* White text for contrast */
+    -fx-font-size: 18px; /* Larger font for readability */
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px; /* More padding for a robust look */
+    -fx-border-radius: 15; /* Rounded corners */
+    -fx-background-radius: 15; /* Consistent rounded background */
+    -fx-effect: dropshadow(gaussian, #8B0000, 12, 0.6, 2, 2); /* Shadow effect for depth */
 }
 
 .button:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: #FF6347; /* Tomato color on hover */
+    -fx-effect: dropshadow(gaussian, #8B0000, 15, 0.7, 3, 3); /* Enhanced shadow on hover */
+}
+
+.button:pressed {
+    -fx-background-color: #B22222; /* Dark red when pressed */
 }
