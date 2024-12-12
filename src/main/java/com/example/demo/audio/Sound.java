@@ -8,6 +8,7 @@ public class Sound {
     private static final String ENEMY_PROJECTILE_SOUND = "/com/example/demo/sounds/enemy_projectile.mp3";
     private static final String EXPLOSION_SOUND = "/com/example/demo/sounds/explosion.mp3";
     private static final String GAME_OVER_SOUND = "/com/example/demo/sounds/gameover.mp3";
+    private static final String GAME_START_SOUND = "/com/example/demo/sounds/gamestart.mp3";
     private static final String NEXT_LEVEL_SOUND = "/com/example/demo/sounds/next_level.mp3";
     private static final String NO_SHIELD_SOUND = "/com/example/demo/sounds/no_shield.mp3";
     private static final String POWERUP_SOUND = "/com/example/demo/sounds/powerup.mp3";
@@ -19,6 +20,7 @@ public class Sound {
     private Media explosion;
     private Media enemyProjectile;
     private Media gameover;
+    private Media gamestart;
     private Media nextLevel;
     private Media noShield;
     private Media powerUp;
@@ -29,6 +31,7 @@ public class Sound {
     private MediaPlayer buttonSound;
     private MediaPlayer explosionSound;
     private MediaPlayer gameoverSound;
+    private MediaPlayer gameStartSound;
     private MediaPlayer nextLevelSound;
     private MediaPlayer noShieldSound;
     private MediaPlayer enemyProjectileSound;
@@ -44,6 +47,7 @@ public class Sound {
         explosion = new Media(getClass().getResource(EXPLOSION_SOUND).toExternalForm());
         enemyProjectile = new Media(getClass().getResource(ENEMY_PROJECTILE_SOUND).toExternalForm());
         gameover = new Media(getClass().getResource(GAME_OVER_SOUND).toExternalForm());
+        gamestart = new Media(getClass().getResource(GAME_START_SOUND).toExternalForm());
         nextLevel = new Media(getClass().getResource(NEXT_LEVEL_SOUND).toExternalForm());
         noShield = new Media(getClass().getResource(NO_SHIELD_SOUND).toExternalForm());
         powerUp = new Media(getClass().getResource(POWERUP_SOUND).toExternalForm());
@@ -54,6 +58,7 @@ public class Sound {
         buttonSound = new MediaPlayer(button);
         explosionSound = new MediaPlayer(explosion);
         gameoverSound = new MediaPlayer(gameover);
+        gameStartSound = new MediaPlayer(gamestart);
         nextLevelSound = new MediaPlayer(nextLevel);
         noShieldSound = new MediaPlayer(noShield);
         enemyProjectileSound = new MediaPlayer(enemyProjectile);
@@ -91,6 +96,17 @@ public class Sound {
         gameoverSound.setVolume(1.0);
     }
 
+    public void stopGameOverSound() {
+        gameoverSound.stop();
+    }
+
+    public void playGameStartSound() {
+        if (isMuted) return;
+        gameoverSound.stop();
+        gameStartSound.play();
+        gameStartSound.setVolume(1.0);
+    }
+
     public void playNextLevelSound() {
         if (isMuted) return;
         nextLevelSound.stop();
@@ -124,6 +140,10 @@ public class Sound {
         winSound.stop();
         winSound.play();
         winSound.setVolume(1.0);
+    }
+
+    public void stopWinSound () {
+        winSound.stop();
     }
 
     public void playUserProjectileSound() {
