@@ -1,0 +1,21 @@
+/* Button Style */
+.button {
+    -fx-background-color: #FF4500; /* Deep orange to match the fiery theme */
+    -fx-text-fill: white; /* White text for contrast */
+    -fx-font-size: 18px; /* Slightly larger font for better readability */
+    -fx-font-weight: bold;
+    -fx-padding: 15px 30px; /* Added padding for a more prominent appearance */
+    -fx-border-radius: 15; /* Rounded corners for a smooth look */
+    -fx-background-radius: 15; /* Consistent rounded background */
+    -fx-effect: dropshadow(gaussian, #8B0000, 12, 0.6, 2, 2); /* Shadow effect for depth */
+}
+
+.button:hover {
+    -fx-background-color: #FF6347; /* Tomato color for hover effect */
+    -fx-effect: dropshadow(gaussian, #8B0000, 15, 0.7, 3, 3); /* Enhanced shadow for hover */
+}
+
+.button:pressed {
+    -fx-background-color: #B22222; /* Dark red when pressed */
+    -fx-effect: dropshadow(gaussian, #8B0000, 18, 0.8, 2, 2); /* Stronger shadow effect for pressed state */
+}
