@@ -1,5 +1,6 @@
 package com.example.demo.ui;
 
+import com.example.demo.controller.Main;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.Sound;
 import javafx.geometry.Pos;
@@ -42,9 +43,11 @@ public class ContinueMenu extends StackPane {
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #34495e; -fx-padding: 50;");
         layout.getStylesheets().add(getClass().getResource(CONTINUE_MENU_STYLE).toExternalForm());
+        double WIDTH = Main.SCREEN_WIDTH/2 - 150;
+        double HEIGHT = Main.SCREEN_HEIGHT/2 - 175;
         this.setPrefSize(300, 250);
-        this.setLayoutX(500);
-        this.setLayoutY(200);
+        this.setLayoutX(WIDTH);
+        this.setLayoutY(HEIGHT);
         this.getChildren().add(layout);
         this.toFront();
         this.setVisible(false);

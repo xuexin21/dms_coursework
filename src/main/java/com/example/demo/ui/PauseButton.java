@@ -1,5 +1,6 @@
 package com.example.demo.ui;
 
+import com.example.demo.controller.Main;
 import com.example.demo.audio.Sound;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,8 +9,8 @@ import javafx.scene.input.MouseEvent;
 public class PauseButton extends ImageView {
     private static final String PAUSE_BUTTON_IMAGE = "/com/example/demo/images/pausebutton.png";
     private static final int PAUSE_BUTTON_SIZE = 50;
-    private static final int xPosition = 1200;
-    private static final int yPosition = 10;
+    private static final double xPosition = Main.SCREEN_WIDTH - 100;
+    private static final int yPosition = Main.SCREEN_HEIGHT - 740;
     private Sound sound;
 
     public PauseButton(Runnable onPause, Sound sound) {

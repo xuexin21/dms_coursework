@@ -1,11 +1,12 @@
 package com.example.demo.view;
 
+import com.example.demo.controller.Main;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 public class KillCountDisplay extends StackPane {
-    private static final int xPosition = 1080;
-    private static final int yPosition = 10;
+    private static final int xPosition = Main.SCREEN_WIDTH - 200;
+    private static final int yPosition = Main.SCREEN_HEIGHT - 740;
     private final int initialKillCount;
     private final Label killCountText;
 
