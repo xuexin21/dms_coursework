@@ -1,7 +1,7 @@
-package com.example.demo.ui;
+package com.example.demo.controller.inGame;
 
-import com.example.demo.controller.Main;
 import com.example.demo.audio.Sound;
+import com.example.demo.controller.Main;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;

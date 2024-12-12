@@ -1,8 +1,8 @@
-package com.example.demo.ui;
+package com.example.demo.controller.inGame;
 
-import com.example.demo.controller.Main;
 import com.example.demo.audio.Music;
 import com.example.demo.audio.Sound;
+import com.example.demo.controller.Main;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,13 +60,14 @@ public class PauseMenu extends StackPane {
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #34495e; -fx-padding: 50;");
         layout.getStylesheets().add(getClass().getResource(PAUSE_MENU_STYLE).toExternalForm());
-        double WIDTH = Main.SCREEN_WIDTH/2 - 150;
-        double HEIGHT = Main.SCREEN_HEIGHT/2 - 225;
-        this.setPrefSize(300, 250);
+        double WIDTH = Main.SCREEN_WIDTH/2 - 190;
+        double HEIGHT = Main.SCREEN_HEIGHT/2 - 250;
+        this.setPrefSize(400, 250);
         this.setLayoutX(WIDTH);
         this.setLayoutY(HEIGHT);
         this.getChildren().add(layout);
         this.setVisible(false);
+        this.setViewOrder(-1);
     }
 
     private void toggleMuteSound(ToggleButton soundToggle){

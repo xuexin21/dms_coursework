@@ -1,9 +1,9 @@
-package com.example.demo.ui;
+package com.example.demo.controller.inGame;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.example.demo.controller.Controller;
 import com.example.demo.audio.*;
+import com.example.demo.controller.Controller;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
