@@ -83,9 +83,14 @@ public class LevelFour extends LevelParent {
 	private LevelViewLevelFour levelView;
 
 	/**
-	 * Flag indicating if the shield is activated for the bosses.
+	 * Flag indicating if the shield is activated for the boss one.
 	 */
-	private boolean shieldActivated = false;
+	private boolean shieldActivatedBossOne = false;
+
+	/**
+	 * Flag indicating if the shield is activated for the boss two.
+	 */
+	private boolean shieldActivatedBossTwo = false;
 
 	/**
 	 * Constructs a LevelFour object, initializing the level with the necessary parameters.
@@ -210,16 +215,16 @@ public class LevelFour extends LevelParent {
 		levelView.firstBossUpdateHealthDisplayPosition(firstboss);
 
 		if (firstboss.isShielded()) {
-			if (!shieldActivated) {
+			if (!shieldActivatedBossOne) {
 				sound.playShieldSound();
-				shieldActivated = true;
+				shieldActivatedBossOne = true;
 			}
 			levelView.firstBossShowShield();
 		}
 		else {
-			if (shieldActivated) {
+			if (shieldActivatedBossOne) {
 				sound.playNoShieldSound();
-				shieldActivated = false;
+				shieldActivatedBossOne = false;
 			}
 			levelView.firstBossHideShield();
 		}
@@ -231,16 +236,16 @@ public class LevelFour extends LevelParent {
 		levelView.secondBossUpdateHealthDisplayPosition(secondBoss);
 
 		if (secondBoss.isShielded()) {
-			if (!shieldActivated) {
+			if (!shieldActivatedBossTwo) {
 				sound.playShieldSound();
-				shieldActivated = true;
+				shieldActivatedBossTwo = true;
 			}
 			levelView.secondBossShowShield();
 		}
 		else {
-			if (shieldActivated) {
+			if (shieldActivatedBossTwo) {
 				sound.playNoShieldSound();
-				shieldActivated = false;
+				shieldActivatedBossTwo = false;
 			}
 			levelView.secondBossHideShield();
 		}
